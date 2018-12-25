@@ -1,5 +1,3 @@
-#![feature(test)]
-extern crate test;
 
 pub mod two_sum;
 
