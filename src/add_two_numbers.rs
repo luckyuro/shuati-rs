@@ -56,9 +56,4 @@ pub fn add_two_numbers(l1: Option<Box<ListNode>>, l2: Option<Box<ListNode>>) -> 
 
 #[cfg(test)]
 mod test {
-    use super::add_two_numbers;
-
-    #[test]
-    fn test_add_two_numbers() {
-    }
 }
