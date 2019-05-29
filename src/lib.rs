@@ -1,10 +1,12 @@
 
-pub mod two_sum;
-pub mod add_two_numbers;
-pub mod length_of_longest_substring;
-pub mod find_median_sorted_arrays;
-pub mod longest_palindrome;
-pub mod convert_p6;
+pub mod p1_two_sum;
+pub mod p2_add_two_numbers;
+pub mod p3_length_of_longest_substring;
+pub mod p4_find_median_sorted_arrays;
+pub mod p5_longest_palindrome;
+pub mod p6_convert;
+pub mod self_change_a_b;
+pub mod fenwick;
 
 #[cfg(test)]
 mod tests {
