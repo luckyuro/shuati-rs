@@ -19,6 +19,7 @@ pub mod p134_gas_station;
 //pub mod p136_single_number;
 pub mod p137_single_number;
 
+pub mod p743_network_delay_time;
 //pub mod p915_partition_disjoint;
 
 //pub mod p922_sort_array_by_parity_ii;
