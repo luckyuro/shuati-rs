@@ -1,7 +1,8 @@
 
 pub mod leetcode;
-pub mod cbs;
+pub mod cds;
 pub mod other;
+pub mod katas;
 
 #[cfg(test)]
 mod tests {

@@ -1,0 +1,16 @@
+pub mod divisors;
+pub mod dec_digits;
+pub mod half_step;
+pub mod new_benefactor;
+pub mod are_they_the_same;
+pub mod consecutive_strings;
+pub mod move_squared_strings;
+pub mod order_weight;
+pub mod pile_of_cubes;
+pub mod directions_reduction;
+pub mod play_on_chessboard;
+//pub mod magnet_particles;
+pub mod is_my_friend_cheating;
+pub mod replace_with_alphabet_position;
+pub mod twice_linear;
+pub mod n_linear;
