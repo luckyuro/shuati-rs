@@ -1,6 +1,6 @@
 use std::cmp::min;
 use std::collections::HashSet;
-struct Solution;
+use super::Solution;
 
 impl Solution {
     pub fn mincost_tickets(days: Vec<i32>, costs: Vec<i32>) -> i32 {

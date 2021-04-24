@@ -1,4 +1,4 @@
-struct Solution;
+use super::Solution;
 
 impl Solution {
     pub fn max_depth_after_split(seq: String) -> Vec<i32> {

@@ -1,4 +1,4 @@
-use crate::Solution;
+use super::Solution;
 impl Solution {
     fn reverse(x: i32) -> i32 {
         if x == 0 {

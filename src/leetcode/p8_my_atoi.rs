@@ -1,4 +1,4 @@
-use crate::Solution;
+use super::Solution;
 impl Solution {
     pub fn my_atoi(str: String) -> i32 {
         let mut flag = 0;
