@@ -3,26 +3,27 @@
 //          https://www.codewars.com/kata/n-linear/train/rust
 
 fn n_linear(m: &[u32], n: usize) -> u32 {
-
     let mut mptr_vec = Vec::with_capacity(m.len());
     let mut mvalue_vec = Vec::with_capacity(m.len());
-    let mut ans_vec = Vec::with_capacity(n+1);
+    let mut ans_vec = Vec::with_capacity(n + 1);
 
     for i in 0..m.len() {
         mptr_vec.push(0);
         mvalue_vec.push(m[i] * 1 + 1)
     }
-    for i in 0..=n{
+    for _i in 0..=n {
         ans_vec.push(1u32);
     }
 
     for l in 0..n {
         let mut min = std::u32::MAX;
         for i in 0..m.len() {
-            if mvalue_vec[i] < min { min = mvalue_vec[i]; }
+            if mvalue_vec[i] < min {
+                min = mvalue_vec[i];
+            }
         }
 
-        ans_vec[l+1] = min;
+        ans_vec[l + 1] = min;
 
         for i in 0..m.len() {
             if mvalue_vec[i] == min {
@@ -33,7 +34,6 @@ fn n_linear(m: &[u32], n: usize) -> u32 {
     }
 
     ans_vec[n]
-
 }
 
 #[cfg(test)]
@@ -52,7 +52,6 @@ mod tests {
         assert_eq!(n_linear(&[5, 7, 8], 11), 65);
     }
 }
-
 
 //
 //fn n_linear(m: &[u32], n: usize) -> u32 {
@@ -99,7 +98,6 @@ mod tests {
 //        count += 1;
 //    }
 //}
-
 
 //fn n_linear(m: &[u32], n: usize) -> u32 {
 //    use std::collections::HashMap;
@@ -155,6 +153,4 @@ mod tests {
 //}
 
 #[cfg(test)]
-mod test {
-
-}
+mod test {}

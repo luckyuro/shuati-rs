@@ -1,8 +1,9 @@
+#![allow(dead_code)]
 
 pub mod leetcode;
-pub mod cds;
-pub mod other;
+// pub mod cds;
 pub mod katas;
+pub mod other;
 
 #[cfg(test)]
 mod tests {
