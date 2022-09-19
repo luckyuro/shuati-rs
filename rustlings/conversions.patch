@@ -1,0 +1,167 @@
+diff --git a/exercises/conversions/as_ref_mut.rs b/exercises/conversions/as_ref_mut.rs
+index 9f47973..7b6554a 100644
+--- a/exercises/conversions/as_ref_mut.rs
++++ b/exercises/conversions/as_ref_mut.rs
+@@ -3,24 +3,22 @@
+ // and https://doc.rust-lang.org/std/convert/trait.AsMut.html, respectively.
+ // Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ // Obtain the number of bytes (not characters) in the given argument
+ // Add the AsRef trait appropriately as a trait bound
+-fn byte_counter<T>(arg: T) -> usize {
++fn byte_counter<T: AsRef<str>>(arg: T) -> usize {
+     arg.as_ref().as_bytes().len()
+ }
+ 
+ // Obtain the number of characters (not bytes) in the given argument
+ // Add the AsRef trait appropriately as a trait bound
+-fn char_counter<T>(arg: T) -> usize {
++fn char_counter<T: AsRef<str>>(arg: T) -> usize {
+     arg.as_ref().chars().count()
+ }
+ 
+ // Squares a number using AsMut. Add the trait bound as is appropriate and
+ // implement the function body.
+-fn num_sq<T>(arg: &mut T) {
+-    ???
++fn num_sq<T: AsMut<u32>>(arg: &mut T) {
++    *arg.as_mut() = *arg.as_mut() * *arg.as_mut()
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/conversions/from_into.rs b/exercises/conversions/from_into.rs
+index 6c272c3..aab2a30 100644
+--- a/exercises/conversions/from_into.rs
++++ b/exercises/conversions/from_into.rs
+@@ -35,10 +35,22 @@ impl Default for Person {
+ // If while parsing the age, something goes wrong, then return the default of Person
+ // Otherwise, then return an instantiated Person object with the results
+ 
+-// I AM NOT DONE
+ 
+ impl From<&str> for Person {
+     fn from(s: &str) -> Person {
++        s.split_once(',').and_then(|(name, mut other)| {
++            if other.contains(',') {
++                other = other.split_once(',').unwrap().1;
++            }
++            if name.is_empty() {
++                return None
++            }
++            other.parse::<usize>().ok().and_then(|age| Some(Person{
++                name: name.to_string(),
++                age
++            }))
++            
++        }).unwrap_or_else(Person::default)
+     }
+ }
+ 
+diff --git a/exercises/conversions/from_str.rs b/exercises/conversions/from_str.rs
+index fe16815..0cb42cd 100644
+--- a/exercises/conversions/from_str.rs
++++ b/exercises/conversions/from_str.rs
+@@ -28,8 +28,6 @@ enum ParsePersonError {
+     ParseInt(ParseIntError),
+ }
+ 
+-// I AM NOT DONE
+-
+ // Steps:
+ // 1. If the length of the provided string is 0, an error should be returned
+ // 2. Split the given string on the commas present in it
+@@ -46,6 +44,31 @@ enum ParsePersonError {
+ impl FromStr for Person {
+     type Err = ParsePersonError;
+     fn from_str(s: &str) -> Result<Person, Self::Err> {
++        if s.is_empty() {
++            Err(ParsePersonError::Empty)
++        } else {
++            let elements = s.split(',').collect::<Vec<_>>();
++            if elements.len() == 2 {
++                let name = elements[0];
++                let age = elements[1];
++                if name.is_empty() {
++                    Err(ParsePersonError::NoName)
++                } else {
++                    match age.parse::<usize>() {
++                        Ok(age) => Ok(
++                            Person {
++                                name: name.to_string(),
++                                age
++                            }
++                        ),
++                        Err(e) => Err(ParsePersonError::ParseInt(e))
++                    }
++                }
++            } else {
++                Err(ParsePersonError::BadLen)
++            }
++            
++        }
+     }
+ }
+ 
+diff --git a/exercises/conversions/try_from_into.rs b/exercises/conversions/try_from_into.rs
+index fa98bc9..5c60dd8 100644
+--- a/exercises/conversions/try_from_into.rs
++++ b/exercises/conversions/try_from_into.rs
+@@ -23,7 +23,6 @@ enum IntoColorError {
+     IntConversion,
+ }
+ 
+-// I AM NOT DONE
+ 
+ // Your task is to complete this implementation
+ // and return an Ok result of inner type Color.
+@@ -38,6 +37,11 @@ enum IntoColorError {
+ impl TryFrom<(i16, i16, i16)> for Color {
+     type Error = IntoColorError;
+     fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
++        Ok(Color{
++            red: u8::try_from(tuple.0).map_err(|_| IntoColorError::IntConversion)?,
++            green: u8::try_from(tuple.1).map_err(|_| IntoColorError::IntConversion)?,
++            blue: u8::try_from(tuple.2).map_err(|_| IntoColorError::IntConversion)?
++        })
+     }
+ }
+ 
+@@ -45,6 +49,7 @@ impl TryFrom<(i16, i16, i16)> for Color {
+ impl TryFrom<[i16; 3]> for Color {
+     type Error = IntoColorError;
+     fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
++        Color::try_from((arr[0], arr[1], arr[2]))
+     }
+ }
+ 
+@@ -52,6 +57,11 @@ impl TryFrom<[i16; 3]> for Color {
+ impl TryFrom<&[i16]> for Color {
+     type Error = IntoColorError;
+     fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
++        if slice.len() != 3 {
++            Err(IntoColorError::BadLen)
++        } else {
++            Color::try_from((slice[0], slice[1], slice[2]))
++        }
+     }
+ }
+ 
+diff --git a/exercises/conversions/using_as.rs b/exercises/conversions/using_as.rs
+index 8c9b711..146d809 100644
+--- a/exercises/conversions/using_as.rs
++++ b/exercises/conversions/using_as.rs
+@@ -6,11 +6,10 @@
+ // and returns the proper type.
+ // Execute `rustlings hint using_as` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn average(values: &[f64]) -> f64 {
+     let total = values.iter().sum::<f64>();
+-    total / values.len()
++    total / (values.len() as f64)
+ }
+ 
+ fn main() {

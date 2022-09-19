@@ -1,0 +1,316 @@
+diff --git a/exercises/standard_library_types/arc1.rs b/exercises/standard_library_types/arc1.rs
+index 93a2703..b35a1bc 100644
+--- a/exercises/standard_library_types/arc1.rs
++++ b/exercises/standard_library_types/arc1.rs
+@@ -18,19 +18,17 @@
+ // where the second TODO comment is. Try not to create any copies of the `numbers` Vec!
+ // Execute `rustlings hint arc1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ #![forbid(unused_imports)] // Do not change this, (or the next) line.
+ use std::sync::Arc;
+ use std::thread;
+ 
+ fn main() {
+     let numbers: Vec<_> = (0..100u32).collect();
+-    let shared_numbers = // TODO
++    let shared_numbers = Arc::new(numbers);
+     let mut joinhandles = Vec::new();
+ 
+     for offset in 0..8 {
+-        let child_numbers = // TODO
++        let child_numbers = shared_numbers.clone();
+         joinhandles.push(thread::spawn(move || {
+             let sum: u32 = child_numbers.iter().filter(|n| *n % 8 == offset).sum();
+             println!("Sum of offset {} is {}", offset, sum);
+diff --git a/exercises/standard_library_types/box1.rs b/exercises/standard_library_types/box1.rs
+index 66cf00f..00e0bef 100644
+--- a/exercises/standard_library_types/box1.rs
++++ b/exercises/standard_library_types/box1.rs
+@@ -16,11 +16,9 @@
+ //
+ // Execute `rustlings hint box1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ #[derive(PartialEq, Debug)]
+ pub enum List {
+-    Cons(i32, List),
++    Cons(i32, Box<List>),
+     Nil,
+ }
+ 
+@@ -33,11 +31,11 @@ fn main() {
+ }
+ 
+ pub fn create_empty_list() -> List {
+-    todo!()
++    List::Nil
+ }
+ 
+ pub fn create_non_empty_list() -> List {
+-    todo!()
++    List::Cons(1, Box::new(List::Nil))
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/standard_library_types/cow1.rs b/exercises/standard_library_types/cow1.rs
+index 5fba251..e4beab3 100644
+--- a/exercises/standard_library_types/cow1.rs
++++ b/exercises/standard_library_types/cow1.rs
+@@ -5,7 +5,6 @@
+ // It can enclose and provide immutable access to borrowed data, and clone the data lazily when mutation or ownership is required.
+ // The type is designed to work with general borrowed data via the Borrow trait.
+ 
+-// I AM NOT DONE
+ 
+ use std::borrow::Cow;
+ 
+@@ -20,6 +19,7 @@ fn abs_all<'a, 'b>(input: &'a mut Cow<'b, [i32]>) -> &'a mut Cow<'b, [i32]> {
+     input
+ }
+ 
++
+ fn main() {
+     // No clone occurs because `input` doesn't need to be mutated.
+     let slice = [0, 1, 2];
+@@ -41,8 +41,7 @@ fn main() {
+     let slice = vec![-1, 0, 1];
+     let mut input = Cow::from(slice);
+     match abs_all(&mut input) {
+-        // TODO
+-        Cow::Borrowed(_) => println!("I own this slice!"),
++        Cow::Owned(_) => println!("I own this slice!"),
+         _ => panic!("expected borrowed value"),
+     }
+ }
+diff --git a/exercises/standard_library_types/iterators1.rs b/exercises/standard_library_types/iterators1.rs
+index 0379c6b..869a824 100644
+--- a/exercises/standard_library_types/iterators1.rs
++++ b/exercises/standard_library_types/iterators1.rs
+@@ -8,17 +8,16 @@
+ //
+ // Execute `rustlings hint iterators1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main () {
+     let my_fav_fruits = vec!["banana", "custard apple", "avocado", "peach", "raspberry"];
+ 
+-    let mut my_iterable_fav_fruits = ???;   // TODO: Step 1
++    let mut my_iterable_fav_fruits = my_fav_fruits.iter();   // TODO: Step 1
+ 
+     assert_eq!(my_iterable_fav_fruits.next(), Some(&"banana"));
+-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 2
++    assert_eq!(my_iterable_fav_fruits.next(), Some(&"custard apple"));     // TODO: Step 2
+     assert_eq!(my_iterable_fav_fruits.next(), Some(&"avocado"));
+-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 3
++    assert_eq!(my_iterable_fav_fruits.next(), Some(&"peach"));     // TODO: Step 3
+     assert_eq!(my_iterable_fav_fruits.next(), Some(&"raspberry"));
+-    assert_eq!(my_iterable_fav_fruits.next(), ???);     // TODO: Step 4
++    assert_eq!(my_iterable_fav_fruits.next(), None);     // TODO: Step 4
+ }
+diff --git a/exercises/standard_library_types/iterators2.rs b/exercises/standard_library_types/iterators2.rs
+index 29c53af..62834c0 100644
+--- a/exercises/standard_library_types/iterators2.rs
++++ b/exercises/standard_library_types/iterators2.rs
+@@ -3,7 +3,6 @@
+ // can offer. Follow the steps to complete the exercise.
+ // Execute `rustlings hint iterators2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ // Step 1.
+ // Complete the `capitalize_first` function.
+@@ -12,7 +11,7 @@ pub fn capitalize_first(input: &str) -> String {
+     let mut c = input.chars();
+     match c.next() {
+         None => String::new(),
+-        Some(first) => ???,
++        Some(first) => format!("{}{}", first.to_ascii_uppercase(), c.collect::<String>()),
+     }
+ }
+ 
+@@ -21,7 +20,7 @@ pub fn capitalize_first(input: &str) -> String {
+ // Return a vector of strings.
+ // ["hello", "world"] -> ["Hello", "World"]
+ pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
+-    vec![]
++    words.iter().map(|s| capitalize_first(s)).collect()
+ }
+ 
+ // Step 3.
+@@ -29,7 +28,7 @@ pub fn capitalize_words_vector(words: &[&str]) -> Vec<String> {
+ // Return a single string.
+ // ["hello", " ", "world"] -> "Hello World"
+ pub fn capitalize_words_string(words: &[&str]) -> String {
+-    String::new()
++    capitalize_words_vector(words).join("")
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/standard_library_types/iterators3.rs b/exercises/standard_library_types/iterators3.rs
+index c97a625..2c360b0 100644
+--- a/exercises/standard_library_types/iterators3.rs
++++ b/exercises/standard_library_types/iterators3.rs
+@@ -6,7 +6,6 @@
+ //    list_of_results functions.
+ // Execute `rustlings hint iterators3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ #[derive(Debug, PartialEq, Eq)]
+ pub enum DivisionError {
+@@ -23,21 +22,34 @@ pub struct NotDivisibleError {
+ // Calculate `a` divided by `b` if `a` is evenly divisible by `b`.
+ // Otherwise, return a suitable error.
+ pub fn divide(a: i32, b: i32) -> Result<i32, DivisionError> {
+-    todo!();
++    if b == 0 {
++        Err(DivisionError::DivideByZero)
++    } else if a % b != 0 {
++        Err(DivisionError::NotDivisible(
++            NotDivisibleError {
++                dividend: a,
++                divisor: b
++            }
++        ))
++    } else {
++        Ok(a / b)
++    }
+ }
+ 
+ // Complete the function and return a value of the correct type so the test passes.
+ // Desired output: Ok([1, 11, 1426, 3])
+-fn result_with_list() -> () {
++fn result_with_list() -> Result<Vec<i32>, DivisionError> {
+     let numbers = vec![27, 297, 38502, 81];
+-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
++    let division_results = numbers.into_iter().map(|n| divide(n, 27)).collect::<Result<Vec<i32>, DivisionError>>();
++    division_results
+ }
+ 
+ // Complete the function and return a value of the correct type so the test passes.
+ // Desired output: [Ok(1), Ok(11), Ok(1426), Ok(3)]
+-fn list_of_results() -> () {
++fn list_of_results() -> Vec<Result<i32, DivisionError>> {
+     let numbers = vec![27, 297, 38502, 81];
+-    let division_results = numbers.into_iter().map(|n| divide(n, 27));
++    let division_results = numbers.into_iter().map(|n| divide(n, 27)).collect::<Vec<Result<i32, DivisionError>>>();
++    division_results
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/standard_library_types/iterators4.rs b/exercises/standard_library_types/iterators4.rs
+index a02470e..2a2ae8a 100644
+--- a/exercises/standard_library_types/iterators4.rs
++++ b/exercises/standard_library_types/iterators4.rs
+@@ -1,7 +1,6 @@
+ // iterators4.rs
+ // Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ pub fn factorial(num: u64) -> u64 {
+     // Complete this function to return the factorial of num
+@@ -13,6 +12,17 @@ pub fn factorial(num: u64) -> u64 {
+     // For an extra challenge, don't use:
+     // - recursion
+     // Execute `rustlings hint iterators4` for hints.
++    if num == 0 || num == 1{
++        1
++    } else {
++        let mut f = 1;
++        let mut p = 1;
++        while num != f {
++            f += 1;
++            p *= f;
++        }
++        p
++    }
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/standard_library_types/iterators5.rs b/exercises/standard_library_types/iterators5.rs
+index 0593d12..723435b 100644
+--- a/exercises/standard_library_types/iterators5.rs
++++ b/exercises/standard_library_types/iterators5.rs
+@@ -10,8 +10,6 @@
+ //
+ // Make the code compile and the tests pass.
+ 
+-// I AM NOT DONE
+-
+ use std::collections::HashMap;
+ 
+ #[derive(Clone, Copy, PartialEq, Eq)]
+@@ -34,7 +32,7 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
+ fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
+     // map is a hashmap with String keys and Progress values.
+     // map = { "variables1": Complete, "from_str": None, ... }
+-    todo!();
++    map.values().filter(|&val| val == &value).collect::<Vec<_>>().len()
+ }
+ 
+ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
+@@ -53,7 +51,7 @@ fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Pr
+     // collection is a slice of hashmaps.
+     // collection = [{ "variables1": Complete, "from_str": None, ... },
+     //     { "variables2": Complete, ... }, ... ]
+-    todo!();
++    collection.iter().map(|m| count_iterator(m, value)).sum()
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/standard_library_types/rc1.rs b/exercises/standard_library_types/rc1.rs
+index 9b907fd..c2445c9 100644
+--- a/exercises/standard_library_types/rc1.rs
++++ b/exercises/standard_library_types/rc1.rs
+@@ -5,7 +5,6 @@
+ 
+ // Make this code compile by using the proper Rc primitives to express that the sun has multiple owners.
+ 
+-// I AM NOT DONE
+ use std::rc::Rc;
+ 
+ #[derive(Debug)]
+@@ -53,18 +52,15 @@ fn main() {
+     println!("reference count = {}", Rc::strong_count(&sun)); // 6 references
+     jupiter.details();
+ 
+-    // TODO
+-    let saturn = Planet::Saturn(Rc::new(Sun {}));
++    let saturn = Planet::Saturn(Rc::clone(&sun));
+     println!("reference count = {}", Rc::strong_count(&sun)); // 7 references
+     saturn.details();
+ 
+-    // TODO
+-    let uranus = Planet::Uranus(Rc::new(Sun {}));
++    let uranus = Planet::Uranus(Rc::clone(&sun));
+     println!("reference count = {}", Rc::strong_count(&sun)); // 8 references
+     uranus.details();
+ 
+-    // TODO
+-    let neptune = Planet::Neptune(Rc::new(Sun {}));
++    let neptune = Planet::Neptune(Rc::clone(&sun));
+     println!("reference count = {}", Rc::strong_count(&sun)); // 9 references
+     neptune.details();
+ 
+@@ -85,13 +81,13 @@ fn main() {
+     drop(mars);
+     println!("reference count = {}", Rc::strong_count(&sun)); // 4 references
+ 
+-    // TODO
++    drop(earth);
+     println!("reference count = {}", Rc::strong_count(&sun)); // 3 references
+ 
+-    // TODO
++    drop(venus);
+     println!("reference count = {}", Rc::strong_count(&sun)); // 2 references
+ 
+-    // TODO
++    drop(mercury);
+     println!("reference count = {}", Rc::strong_count(&sun)); // 1 reference
+ 
+     assert_eq!(Rc::strong_count(&sun), 1);

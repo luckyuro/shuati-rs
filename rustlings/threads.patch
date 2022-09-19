@@ -1,0 +1,109 @@
+diff --git a/exercises/threads/threads1.rs b/exercises/threads/threads1.rs
+index e59f4ce..6d69616 100644
+--- a/exercises/threads/threads1.rs
++++ b/exercises/threads/threads1.rs
+@@ -2,7 +2,6 @@
+ // Execute `rustlings hint threads1` or use the `hint` watch subcommand for a hint.
+ // This program should wait until all the spawned threads have finished before exiting.
+ 
+-// I AM NOT DONE
+ 
+ use std::thread;
+ use std::time::Duration;
+@@ -12,15 +11,15 @@ fn main() {
+ 
+     let mut handles = vec![];
+     for i in 0..10 {
+-        thread::spawn(move || {
++        handles.push(thread::spawn(move || {
+             thread::sleep(Duration::from_millis(250));
+             println!("thread {} is complete", i);
+-        });
++        }));
+     }
+ 
+     let mut completed_threads = 0;
+     for handle in handles {
+-        // TODO: a struct is returned from thread::spawn, can you use it?
++        handle.join();
+         completed_threads += 1;
+     }
+ 
+diff --git a/exercises/threads/threads2.rs b/exercises/threads/threads2.rs
+index d0f8578..7e656b5 100644
+--- a/exercises/threads/threads2.rs
++++ b/exercises/threads/threads2.rs
+@@ -3,9 +3,8 @@
+ // Building on the last exercise, we want all of the threads to complete their work but this time
+ // the spawned threads need to be in charge of updating a shared value: JobStatus.jobs_completed
+ 
+-// I AM NOT DONE
+ 
+-use std::sync::Arc;
++use std::sync::{Arc, Mutex};
+ use std::thread;
+ use std::time::Duration;
+ 
+@@ -14,14 +13,14 @@ struct JobStatus {
+ }
+ 
+ fn main() {
+-    let status = Arc::new(JobStatus { jobs_completed: 0 });
++    let status = Arc::new(Mutex::new(JobStatus { jobs_completed: 0 }));
+     let mut handles = vec![];
+     for _ in 0..10 {
+         let status_shared = status.clone();
+         let handle = thread::spawn(move || {
+             thread::sleep(Duration::from_millis(250));
+-            // TODO: You must take an action before you update a shared value
+-            status_shared.jobs_completed += 1;
++            let mut status = status_shared.lock().unwrap();
++            status.jobs_completed += 1;
+         });
+         handles.push(handle);
+     }
+@@ -29,6 +28,6 @@ fn main() {
+         handle.join().unwrap();
+         // TODO: Print the value of the JobStatus.jobs_completed. Did you notice anything
+         // interesting in the output? Do you have to 'join' on all the handles?
+-        println!("jobs completed {}", ???);
++        println!("jobs completed {}", status.lock().unwrap().jobs_completed);
+     }
+ }
+diff --git a/exercises/threads/threads3.rs b/exercises/threads/threads3.rs
+index 27e9908..21319b7 100644
+--- a/exercises/threads/threads3.rs
++++ b/exercises/threads/threads3.rs
+@@ -1,7 +1,6 @@
+ // threads3.rs
+ // Execute `rustlings hint threads3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::sync::mpsc;
+ use std::sync::Arc;
+@@ -28,11 +27,14 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+     let qc = Arc::new(q);
+     let qc1 = qc.clone();
+     let qc2 = qc.clone();
++    
++    let tx1 = tx.clone();
++    let tx2 = tx.clone();
+ 
+     thread::spawn(move || {
+         for val in &qc1.first_half {
+             println!("sending {:?}", val);
+-            tx.send(*val).unwrap();
++            tx1.send(*val).unwrap();
+             thread::sleep(Duration::from_secs(1));
+         }
+     });
+@@ -40,7 +42,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+     thread::spawn(move || {
+         for val in &qc2.second_half {
+             println!("sending {:?}", val);
+-            tx.send(*val).unwrap();
++            tx2.send(*val).unwrap();
+             thread::sleep(Duration::from_secs(1));
+         }
+     });

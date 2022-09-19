@@ -1,0 +1,90 @@
+diff --git a/exercises/functions/functions1.rs b/exercises/functions/functions1.rs
+index 03d8af7..24c47b0 100644
+--- a/exercises/functions/functions1.rs
++++ b/exercises/functions/functions1.rs
+@@ -1,8 +1,9 @@
+ // functions1.rs
+ // Execute `rustlings hint functions1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     call_me();
+ }
++
++fn call_me() {}
+\ No newline at end of file
+diff --git a/exercises/functions/functions2.rs b/exercises/functions/functions2.rs
+index 7d40a57..76faed0 100644
+--- a/exercises/functions/functions2.rs
++++ b/exercises/functions/functions2.rs
+@@ -1,13 +1,12 @@
+ // functions2.rs
+ // Execute `rustlings hint functions2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     call_me(3);
+ }
+ 
+-fn call_me(num:) {
++fn call_me(num:i32) {
+     for i in 0..num {
+         println!("Ring! Call number {}", i + 1);
+     }
+diff --git a/exercises/functions/functions3.rs b/exercises/functions/functions3.rs
+index 3b9e585..26fa817 100644
+--- a/exercises/functions/functions3.rs
++++ b/exercises/functions/functions3.rs
+@@ -1,10 +1,9 @@
+ // functions3.rs
+ // Execute `rustlings hint functions3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    call_me();
++    call_me(10);
+ }
+ 
+ fn call_me(num: u32) {
+diff --git a/exercises/functions/functions4.rs b/exercises/functions/functions4.rs
+index 65d5be4..52ae252 100644
+--- a/exercises/functions/functions4.rs
++++ b/exercises/functions/functions4.rs
+@@ -7,14 +7,13 @@
+ // in the signatures for now. If anything, this is a good way to peek ahead
+ // to future exercises!)
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     let original_price = 51;
+     println!("Your sale price is {}", sale_price(original_price));
+ }
+ 
+-fn sale_price(price: i32) -> {
++fn sale_price(price: i32) -> i32 {
+     if is_even(price) {
+         price - 10
+     } else {
+diff --git a/exercises/functions/functions5.rs b/exercises/functions/functions5.rs
+index 5d76296..7283852 100644
+--- a/exercises/functions/functions5.rs
++++ b/exercises/functions/functions5.rs
+@@ -1,7 +1,6 @@
+ // functions5.rs
+ // Execute `rustlings hint functions5` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     let answer = square(3);
+@@ -9,5 +8,5 @@ fn main() {
+ }
+ 
+ fn square(num: i32) -> i32 {
+-    num * num;
++    num * num
+ }

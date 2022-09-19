@@ -1,0 +1,145 @@
+diff --git a/exercises/error_handling/errors1.rs b/exercises/error_handling/errors1.rs
+index bcee972..1df898f 100644
+--- a/exercises/error_handling/errors1.rs
++++ b/exercises/error_handling/errors1.rs
+@@ -5,14 +5,11 @@
+ // construct to `Option` that can be used to express error conditions. Let's use it!
+ // Execute `rustlings hint errors1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+-pub fn generate_nametag_text(name: String) -> Option<String> {
++pub fn generate_nametag_text(name: String) -> Result<String, String> {
+     if name.is_empty() {
+-        // Empty names aren't allowed.
+-        None
++        Err("`name` was empty; it must be nonempty.".into())
+     } else {
+-        Some(format!("Hi! My name is {}", name))
++        Ok(format!("Hi! My name is {}", name))
+     }
+ }
+ 
+diff --git a/exercises/error_handling/errors2.rs b/exercises/error_handling/errors2.rs
+index 1cd8fc6..19100b0 100644
+--- a/exercises/error_handling/errors2.rs
++++ b/exercises/error_handling/errors2.rs
+@@ -17,7 +17,6 @@
+ // one is a lot shorter!
+ // Execute `rustlings hint errors2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::num::ParseIntError;
+ 
+@@ -25,8 +24,7 @@ pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
+     let processing_fee = 1;
+     let cost_per_item = 5;
+     let qty = item_quantity.parse::<i32>();
+-
+-    Ok(qty * cost_per_item + processing_fee)
++    qty.and_then(|qty|  Ok(qty * cost_per_item + processing_fee))
+ }
+ 
+ #[cfg(test)]
+diff --git a/exercises/error_handling/errors3.rs b/exercises/error_handling/errors3.rs
+index a2d2d19..02df991 100644
+--- a/exercises/error_handling/errors3.rs
++++ b/exercises/error_handling/errors3.rs
+@@ -4,7 +4,6 @@
+ // Why not? What should we do to fix it?
+ // Execute `rustlings hint errors3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::num::ParseIntError;
+ 
+@@ -12,7 +11,7 @@ fn main() {
+     let mut tokens = 100;
+     let pretend_user_input = "8";
+ 
+-    let cost = total_cost(pretend_user_input)?;
++    let cost = total_cost(pretend_user_input).unwrap();
+ 
+     if cost > tokens {
+         println!("You can't afford that many!");
+diff --git a/exercises/error_handling/errors4.rs b/exercises/error_handling/errors4.rs
+index 0efe8cc..2b21128 100644
+--- a/exercises/error_handling/errors4.rs
++++ b/exercises/error_handling/errors4.rs
+@@ -1,7 +1,6 @@
+ // errors4.rs
+ // Execute `rustlings hint errors4` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ #[derive(PartialEq, Debug)]
+ struct PositiveNonzeroInteger(u64);
+@@ -14,8 +13,13 @@ enum CreationError {
+ 
+ impl PositiveNonzeroInteger {
+     fn new(value: i64) -> Result<PositiveNonzeroInteger, CreationError> {
+-        // Hmm...? Why is this only returning an Ok value?
+-        Ok(PositiveNonzeroInteger(value as u64))
++        if value < 0 {
++            Err(CreationError::Negative)
++        } else if value == 0 {
++            Err(CreationError::Zero)
++        } else {
++            Ok(PositiveNonzeroInteger(value as u64))
++        }
+     }
+ }
+ 
+diff --git a/exercises/error_handling/errors5.rs b/exercises/error_handling/errors5.rs
+index 2ba8f90..7e4d820 100644
+--- a/exercises/error_handling/errors5.rs
++++ b/exercises/error_handling/errors5.rs
+@@ -16,14 +16,12 @@
+ 
+ // Execute `rustlings hint errors5` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ use std::error;
+ use std::fmt;
+ use std::num::ParseIntError;
+ 
+ // TODO: update the return type of `main()` to make this compile.
+-fn main() -> Result<(), Box<dyn ???>> {
++fn main() -> Result<(), Box<dyn error::Error>> {
+     let pretend_user_input = "42";
+     let x: i64 = pretend_user_input.parse()?;
+     println!("output={:?}", PositiveNonzeroInteger::new(x)?);
+diff --git a/exercises/error_handling/errors6.rs b/exercises/error_handling/errors6.rs
+index 1306fb0..779588d 100644
+--- a/exercises/error_handling/errors6.rs
++++ b/exercises/error_handling/errors6.rs
+@@ -8,7 +8,6 @@
+ 
+ // Execute `rustlings hint errors6` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::num::ParseIntError;
+ 
+@@ -24,7 +23,9 @@ impl ParsePosNonzeroError {
+         ParsePosNonzeroError::Creation(err)
+     }
+     // TODO: add another error conversion function here.
+-    // fn from_parseint...
++    fn from_parseint(err: ParseIntError) -> ParsePosNonzeroError {
++        ParsePosNonzeroError::ParseInt(err)
++    }
+ }
+ 
+ fn parse_pos_nonzero(s: &str)
+@@ -32,7 +33,7 @@ fn parse_pos_nonzero(s: &str)
+ {
+     // TODO: change this to return an appropriate error instead of panicking
+     // when `parse()` returns an error.
+-    let x: i64 = s.parse().unwrap();
++    let x: i64 = s.parse().map_err(ParsePosNonzeroError::from_parseint)?;
+     PositiveNonzeroInteger::new(x)
+         .map_err(ParsePosNonzeroError::from_creation)
+ }

@@ -1,0 +1,70 @@
+diff --git a/exercises/macros/macros1.rs b/exercises/macros/macros1.rs
+index 634d0a7..997506a 100644
+--- a/exercises/macros/macros1.rs
++++ b/exercises/macros/macros1.rs
+@@ -1,7 +1,6 @@
+ // macros1.rs
+ // Execute `rustlings hint macros1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ macro_rules! my_macro {
+     () => {
+@@ -10,5 +9,5 @@ macro_rules! my_macro {
+ }
+ 
+ fn main() {
+-    my_macro();
++    my_macro!();
+ }
+diff --git a/exercises/macros/macros2.rs b/exercises/macros/macros2.rs
+index f6092ca..0ecff2d 100644
+--- a/exercises/macros/macros2.rs
++++ b/exercises/macros/macros2.rs
+@@ -1,12 +1,12 @@
+ // macros2.rs
+ // Execute `rustlings hint macros2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     my_macro!();
+ }
+ 
++#[macro_export]
+ macro_rules! my_macro {
+     () => {
+         println!("Check out my macro!");
+diff --git a/exercises/macros/macros3.rs b/exercises/macros/macros3.rs
+index 106f1c6..c63a1da 100644
+--- a/exercises/macros/macros3.rs
++++ b/exercises/macros/macros3.rs
+@@ -2,9 +2,8 @@
+ // Make me compile, without taking the macro out of the module!
+ // Execute `rustlings hint macros3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ mod macros {
++    #[macro_export]
+     macro_rules! my_macro {
+         () => {
+             println!("Check out my macro!");
+diff --git a/exercises/macros/macros4.rs b/exercises/macros/macros4.rs
+index c1fc5e8..646a4d1 100644
+--- a/exercises/macros/macros4.rs
++++ b/exercises/macros/macros4.rs
+@@ -1,12 +1,11 @@
+ // macros4.rs
+ // Execute `rustlings hint macros4` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ macro_rules! my_macro {
+     () => {
+         println!("Check out my macro!");
+-    }
++    };
+     ($val:expr) => {
+         println!("Look at this other macro: {}", $val);
+     }

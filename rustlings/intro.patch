@@ -1,0 +1,27 @@
+diff --git a/exercises/intro/intro1.rs b/exercises/intro/intro1.rs
+index 45c5acb..fc09535 100644
+--- a/exercises/intro/intro1.rs
++++ b/exercises/intro/intro1.rs
+@@ -9,7 +9,7 @@
+ // when you change one of the lines below! Try adding a `println!` line, or try changing
+ // what it outputs in your terminal. Try removing a semicolon and see what happens!
+ 
+-// I AM NOT DONE
++// // I AM NOT DONE
+ 
+ fn main() {
+     println!("Hello and");
+diff --git a/exercises/intro/intro2.rs b/exercises/intro/intro2.rs
+index efc1af2..9b23eae 100644
+--- a/exercises/intro/intro2.rs
++++ b/exercises/intro/intro2.rs
+@@ -2,8 +2,7 @@
+ // Make the code print a greeting to the world.
+ // Execute `rustlings hint intro2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    println!("Hello {}!");
++    println!("Hello {}!", "World");
+ }

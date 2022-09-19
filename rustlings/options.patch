@@ -1,0 +1,93 @@
+diff --git a/exercises/options/options1.rs b/exercises/options/options1.rs
+index d1735c2..8f9b6b1 100644
+--- a/exercises/options/options1.rs
++++ b/exercises/options/options1.rs
+@@ -1,7 +1,6 @@
+ // options1.rs
+ // Execute `rustlings hint options1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ // This function returns how much icecream there is left in the fridge.
+ // If it's before 10PM, there's 5 pieces left. At 10PM, someone eats them
+@@ -10,7 +9,13 @@
+ fn maybe_icecream(time_of_day: u16) -> Option<u16> {
+     // We use the 24-hour system here, so 10PM is a value of 22
+     // The Option output should gracefully handle cases where time_of_day > 24.
+-    ???
++    if time_of_day < 22 {
++        Some(5)
++    } else if time_of_day <= 24{
++        Some(0)
++    } else {
++        None
++    }
+ }
+ 
+ #[cfg(test)]
+@@ -29,7 +34,7 @@ mod tests {
+     #[test]
+     fn raw_value() {
+         // TODO: Fix this test. How do you get at the value contained in the Option?
+-        let icecreams = maybe_icecream(12);
++        let icecreams = maybe_icecream(12).unwrap();
+         assert_eq!(icecreams, 5);
+     }
+ }
+diff --git a/exercises/options/options2.rs b/exercises/options/options2.rs
+index b112047..1f02183 100644
+--- a/exercises/options/options2.rs
++++ b/exercises/options/options2.rs
+@@ -1,7 +1,6 @@
+ // options2.rs
+ // Execute `rustlings hint options2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ #[cfg(test)]
+ mod tests {
+@@ -13,7 +12,7 @@ mod tests {
+         let optional_target = Some(target);
+ 
+         // TODO: Make this an if let statement whose value is "Some" type
+-        word = optional_target {
++        if let Some(word) = optional_target {
+             assert_eq!(word, target);
+         }
+     }
+@@ -28,9 +27,11 @@ mod tests {
+ 
+         // TODO: make this a while let statement - remember that vector.pop also adds another layer of Option<T>
+         // You can stack `Option<T>`'s into while let and if let
+-        integer = optional_integers.pop() {
+-            assert_eq!(integer, range);
+-            range -= 1;
++        while let Some(integer) = optional_integers.pop() {
++            if let Some(integer) = integer {
++                assert_eq!(integer, range);
++                range -= 1;
++            }
+         }
+     }
+ }
+diff --git a/exercises/options/options3.rs b/exercises/options/options3.rs
+index 3f995c5..8fef9a7 100644
+--- a/exercises/options/options3.rs
++++ b/exercises/options/options3.rs
+@@ -1,7 +1,6 @@
+ // options3.rs
+ // Execute `rustlings hint options3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ struct Point {
+     x: i32,
+@@ -11,7 +10,7 @@ struct Point {
+ fn main() {
+     let y: Option<Point> = Some(Point { x: 100, y: 200 });
+ 
+-    match y {
++    match y.as_ref() {
+         Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
+         _ => println!("no match"),
+     }

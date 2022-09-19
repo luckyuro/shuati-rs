@@ -1,0 +1,106 @@
+diff --git a/exercises/traits/traits1.rs b/exercises/traits/traits1.rs
+index 5b9d8d5..3bb74ff 100644
+--- a/exercises/traits/traits1.rs
++++ b/exercises/traits/traits1.rs
+@@ -9,14 +9,15 @@
+ // implementing this trait.
+ // Execute `rustlings hint traits1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ trait AppendBar {
+     fn append_bar(self) -> Self;
+ }
+ 
+ impl AppendBar for String {
+-    //Add your code here
++    fn append_bar(self) -> Self {
++        self + "Bar"
++    }
+ }
+ 
+ fn main() {
+diff --git a/exercises/traits/traits2.rs b/exercises/traits/traits2.rs
+index 708bb19..d99bd4a 100644
+--- a/exercises/traits/traits2.rs
++++ b/exercises/traits/traits2.rs
+@@ -11,13 +11,17 @@
+ // you can do this!
+ // Execute `rustlings hint traits2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ trait AppendBar {
+     fn append_bar(self) -> Self;
+ }
+ 
+-//TODO: Add your code here
++impl AppendBar for Vec<String> {
++    fn append_bar(mut self) -> Self {
++        self.push("Bar".to_string());
++        self
++    }
++}
+ 
+ #[cfg(test)]
+ mod tests {
+diff --git a/exercises/traits/traits3.rs b/exercises/traits/traits3.rs
+index 6d2fd6c..7491a23 100644
+--- a/exercises/traits/traits3.rs
++++ b/exercises/traits/traits3.rs
+@@ -7,10 +7,10 @@
+ // Consider what you can add to the Licensed trait.
+ // Execute `rustlings hint traits3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+-
+ pub trait Licensed {
+-    fn licensing_info(&self) -> String;
++    fn licensing_info(&self) -> String {
++        "Some information".to_string()
++    }
+ }
+ 
+ struct SomeSoftware {
+diff --git a/exercises/traits/traits4.rs b/exercises/traits/traits4.rs
+index 6b54166..27a377d 100644
+--- a/exercises/traits/traits4.rs
++++ b/exercises/traits/traits4.rs
+@@ -4,7 +4,6 @@
+ // Don't change any line other than the marked one.
+ // Execute `rustlings hint traits4` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ pub trait Licensed {
+     fn licensing_info(&self) -> String {
+@@ -20,7 +19,7 @@ impl Licensed for SomeSoftware {}
+ impl Licensed for OtherSoftware {}
+ 
+ // YOU MAY ONLY CHANGE THE NEXT LINE
+-fn compare_license_types(software: ??, software_two: ??) -> bool {
++fn compare_license_types(software: impl Licensed, software_two: impl Licensed) -> bool {
+     software.licensing_info() == software_two.licensing_info()
+ }
+ 
+diff --git a/exercises/traits/traits5.rs b/exercises/traits/traits5.rs
+index 0fbca28..9f4f6d3 100644
+--- a/exercises/traits/traits5.rs
++++ b/exercises/traits/traits5.rs
+@@ -4,7 +4,6 @@
+ // Don't change any line other than the marked one.
+ // Execute `rustlings hint traits5` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ pub trait SomeTrait {
+     fn some_function(&self) -> bool {
+@@ -27,7 +26,7 @@ impl SomeTrait for OtherStruct {}
+ impl OtherTrait for OtherStruct {}
+ 
+ // YOU MAY ONLY CHANGE THE NEXT LINE
+-fn some_func(item: ??) -> bool {
++fn some_func(item: impl SomeTrait + OtherTrait) -> bool {
+     item.some_function() && item.other_function()
+ }
+ 

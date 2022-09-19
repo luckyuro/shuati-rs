@@ -1,0 +1,22 @@
+diff --git a/exercises/quiz1.rs b/exercises/quiz1.rs
+index dbb5cdc..58a28f7 100644
+--- a/exercises/quiz1.rs
++++ b/exercises/quiz1.rs
+@@ -10,10 +10,15 @@
+ // Write a function that calculates the price of an order of apples given
+ // the quantity bought. No hints this time!
+ 
+-// I AM NOT DONE
+ 
+ // Put your function here!
+-// fn calculate_price_of_apples {
++fn calculate_price_of_apples(quant: i32) -> i32 {
++    if quant > 40 {
++        quant
++    } else {
++        quant * 2
++    }
++}
+ 
+ // Don't modify this function!
+ #[test]

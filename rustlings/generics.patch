@@ -1,0 +1,38 @@
+diff --git a/exercises/generics/generics1.rs b/exercises/generics/generics1.rs
+index 4c34ae4..1e8bb52 100644
+--- a/exercises/generics/generics1.rs
++++ b/exercises/generics/generics1.rs
+@@ -3,9 +3,8 @@
+ 
+ // Execute `rustlings hint generics1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    let mut shopping_list: Vec<?> = Vec::new();
++    let mut shopping_list: Vec<_> = Vec::new();
+     shopping_list.push("milk");
+ }
+diff --git a/exercises/generics/generics2.rs b/exercises/generics/generics2.rs
+index aedbd55..847ed1e 100644
+--- a/exercises/generics/generics2.rs
++++ b/exercises/generics/generics2.rs
+@@ -3,14 +3,13 @@
+ 
+ // Execute `rustlings hint generics2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+-struct Wrapper {
+-    value: u32,
++struct Wrapper<T> {
++    value: T,
+ }
+ 
+-impl Wrapper {
+-    pub fn new(value: u32) -> Self {
++impl<T> Wrapper<T> {
++    pub fn new(value: T) -> Self {
+         Wrapper { value }
+     }
+ }

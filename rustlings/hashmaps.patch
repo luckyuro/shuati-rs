@@ -1,0 +1,86 @@
+diff --git a/exercises/hashmaps/hashmaps1.rs b/exercises/hashmaps/hashmaps1.rs
+index fd8dd2f..3c01f99 100644
+--- a/exercises/hashmaps/hashmaps1.rs
++++ b/exercises/hashmaps/hashmaps1.rs
+@@ -10,17 +10,18 @@
+ //
+ // Execute `rustlings hint hashmaps1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::collections::HashMap;
+ 
+ fn fruit_basket() -> HashMap<String, u32> {
+-    let mut basket = // TODO: declare your hash map here.
++    let mut basket = HashMap::new();
+ 
+     // Two bananas are already given for you :)
+     basket.insert(String::from("banana"), 2);
+ 
+-    // TODO: Put more fruits in your basket here.
++    basket.insert(String::from("apple"), 7);
++    basket.insert(String::from("pear"), 1);
++
+ 
+     basket
+ }
+diff --git a/exercises/hashmaps/hashmaps2.rs b/exercises/hashmaps/hashmaps2.rs
+index 454b3e1..2532194 100644
+--- a/exercises/hashmaps/hashmaps2.rs
++++ b/exercises/hashmaps/hashmaps2.rs
+@@ -11,7 +11,6 @@
+ //
+ // Execute `rustlings hint hashmaps2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::collections::HashMap;
+ 
+@@ -34,9 +33,9 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
+     ];
+ 
+     for fruit in fruit_kinds {
+-        // TODO: Put new fruits if not already present. Note that you
+-        // are not allowed to put any type of fruit that's already
+-        // present!
++        if basket.get(&fruit).is_none() {
++            basket.insert(fruit, 3);
++        }
+     }
+ }
+ 
+diff --git a/exercises/hashmaps/hashmaps3.rs b/exercises/hashmaps/hashmaps3.rs
+index 18dd44c..79dcb49 100644
+--- a/exercises/hashmaps/hashmaps3.rs
++++ b/exercises/hashmaps/hashmaps3.rs
+@@ -14,7 +14,6 @@
+ 
+ // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ use std::collections::HashMap;
+ 
+@@ -40,6 +39,22 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
+         // will be number of goals conceded from team_2, and similarly
+         // goals scored by team_2 will be the number of goals conceded by
+         // team_1.
++        scores.entry(team_1_name.clone()).and_modify(|t| 
++            {t.goals_scored+=team_1_score; t.goals_conceded+= team_2_score}).or_insert(
++            Team{
++                name: team_1_name,
++                goals_scored: team_1_score,
++                goals_conceded: team_2_score
++            }
++        );
++        scores.entry(team_2_name.clone()).and_modify(|t| 
++            {t.goals_scored+=team_2_score; t.goals_conceded+= team_1_score}).or_insert(
++            Team{
++                name: team_2_name,
++                goals_scored: team_2_score,
++                goals_conceded: team_1_score
++            }
++        );
+     }
+     scores
+ }

@@ -1,0 +1,94 @@
+diff --git a/exercises/variables/variables1.rs b/exercises/variables/variables1.rs
+index f4d182a..b0ad72d 100644
+--- a/exercises/variables/variables1.rs
++++ b/exercises/variables/variables1.rs
+@@ -2,9 +2,8 @@
+ // Make me compile!
+ // Execute `rustlings hint variables1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    x = 5;
++    let x = 5;
+     println!("x has the value {}", x);
+ }
+diff --git a/exercises/variables/variables2.rs b/exercises/variables/variables2.rs
+index 641aeb8..356900b 100644
+--- a/exercises/variables/variables2.rs
++++ b/exercises/variables/variables2.rs
+@@ -1,10 +1,9 @@
+ // variables2.rs
+ // Execute `rustlings hint variables2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    let x;
++    let x: i32 = 10;
+     if x == 10 {
+         println!("x is ten!");
+     } else {
+diff --git a/exercises/variables/variables3.rs b/exercises/variables/variables3.rs
+index 819b1bc..e6dff81 100644
+--- a/exercises/variables/variables3.rs
++++ b/exercises/variables/variables3.rs
+@@ -1,9 +1,8 @@
+ // variables3.rs
+ // Execute `rustlings hint variables3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    let x: i32;
++    let x: i32 = 42;
+     println!("Number {}", x);
+ }
+diff --git a/exercises/variables/variables4.rs b/exercises/variables/variables4.rs
+index 54491b0..37c6624 100644
+--- a/exercises/variables/variables4.rs
++++ b/exercises/variables/variables4.rs
+@@ -1,10 +1,9 @@
+ // variables4.rs
+ // Execute `rustlings hint variables4` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+-    let x = 3;
++    let mut x = 3;
+     println!("Number {}", x);
+     x = 5; // don't change this line
+     println!("Number {}", x);
+diff --git a/exercises/variables/variables5.rs b/exercises/variables/variables5.rs
+index 0e670d2..cfb3a35 100644
+--- a/exercises/variables/variables5.rs
++++ b/exercises/variables/variables5.rs
+@@ -1,11 +1,10 @@
+ // variables5.rs
+ // Execute `rustlings hint variables5` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ fn main() {
+     let number = "T-H-R-E-E"; // don't change this line
+     println!("Spell a Number : {}", number);
+-    number = 3; // don't rename this variable
++    let number = 3; // don't rename this variable
+     println!("Number plus two is : {}", number + 2);
+ }
+diff --git a/exercises/variables/variables6.rs b/exercises/variables/variables6.rs
+index a852012..536f5c0 100644
+--- a/exercises/variables/variables6.rs
++++ b/exercises/variables/variables6.rs
+@@ -1,9 +1,8 @@
+ // variables6.rs
+ // Execute `rustlings hint variables6` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+-const NUMBER = 3;
++const NUMBER: i32 = 3;
+ fn main() {
+     println!("Number {}", NUMBER);
+ }

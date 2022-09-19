@@ -1,0 +1,73 @@
+diff --git a/exercises/enums/enums1.rs b/exercises/enums/enums1.rs
+index 511ba74..535d21e 100644
+--- a/exercises/enums/enums1.rs
++++ b/exercises/enums/enums1.rs
+@@ -1,11 +1,13 @@
+ // enums1.rs
+ // No hints this time! ;)
+ 
+-// I AM NOT DONE
+ 
+ #[derive(Debug)]
+ enum Message {
+-    // TODO: define a few types of messages as used below
++    Quit,
++    Echo,
++    Move,
++    ChangeColor
+ }
+ 
+ fn main() {
+diff --git a/exercises/enums/enums2.rs b/exercises/enums/enums2.rs
+index 18479f8..7b523aa 100644
+--- a/exercises/enums/enums2.rs
++++ b/exercises/enums/enums2.rs
+@@ -1,11 +1,13 @@
+ // enums2.rs
+ // Execute `rustlings hint enums2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ #[derive(Debug)]
+ enum Message {
+-    // TODO: define the different variants used below
++    Move {x:i32, y:i32},
++    Echo(String),
++    ChangeColor(u8,u8,u8),
++    Quit
+ }
+ 
+ impl Message {
+diff --git a/exercises/enums/enums3.rs b/exercises/enums/enums3.rs
+index 55acf6b..a9936a6 100644
+--- a/exercises/enums/enums3.rs
++++ b/exercises/enums/enums3.rs
+@@ -2,10 +2,12 @@
+ // Address all the TODOs to make the tests pass!
+ // Execute `rustlings hint enums3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ enum Message {
+-    // TODO: implement the message variant types based on their usage below
++    Move (Point),
++    Echo(String),
++    ChangeColor((u8,u8,u8)),
++    Quit
+ }
+ 
+ struct Point {
+@@ -37,7 +39,12 @@ impl State {
+     }
+ 
+     fn process(&mut self, message: Message) {
+-        // TODO: create a match expression to process the different message variants
++        match message {
++            Message::ChangeColor(c) => self.change_color(c),
++            Message::Echo(s) => self.echo(s),
++            Message::Move(p) => self.move_position(p),
++            Message::Quit => self.quit()
++        }
+     }
+ }
+ 

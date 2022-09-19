@@ -1,0 +1,56 @@
+diff --git a/exercises/modules/modules1.rs b/exercises/modules/modules1.rs
+index 8dd0e40..593b117 100644
+--- a/exercises/modules/modules1.rs
++++ b/exercises/modules/modules1.rs
+@@ -1,7 +1,6 @@
+ // modules1.rs
+ // Execute `rustlings hint modules1` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ mod sausage_factory {
+     // Don't let anybody outside of this module see this!
+@@ -9,7 +8,7 @@ mod sausage_factory {
+         String::from("Ginger")
+     }
+ 
+-    fn make_sausage() {
++    pub fn make_sausage() {
+         get_secret_recipe();
+         println!("sausage!");
+     }
+diff --git a/exercises/modules/modules2.rs b/exercises/modules/modules2.rs
+index c30a389..3092f27 100644
+--- a/exercises/modules/modules2.rs
++++ b/exercises/modules/modules2.rs
+@@ -3,12 +3,11 @@
+ // 'use' and 'as' keywords. Fix these 'use' statements to make the code compile.
+ // Execute `rustlings hint modules2` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ mod delicious_snacks {
+     // TODO: Fix these use statements
+-    use self::fruits::PEAR as ???
+-    use self::veggies::CUCUMBER as ???
++    pub use self::fruits::PEAR as fruit;
++    pub use self::veggies::CUCUMBER as veggie;
+ 
+     mod fruits {
+         pub const PEAR: &'static str = "Pear";
+diff --git a/exercises/modules/modules3.rs b/exercises/modules/modules3.rs
+index 35e0799..181d5a3 100644
+--- a/exercises/modules/modules3.rs
++++ b/exercises/modules/modules3.rs
+@@ -5,10 +5,9 @@
+ // from the std::time module. Bonus style points if you can do it with one line!
+ // Execute `rustlings hint modules3` or use the `hint` watch subcommand for a hint.
+ 
+-// I AM NOT DONE
+ 
+ // TODO: Complete this use statement
+-use ???
++use std::time::{SystemTime, UNIX_EPOCH};
+ 
+ fn main() {
+     match SystemTime::now().duration_since(UNIX_EPOCH) {
