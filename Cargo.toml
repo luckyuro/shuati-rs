@@ -2,7 +2,7 @@
 name = "leetcode"
 version = "0.1.0"
 authors = ["abbform <abbform@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 num = "0.2"

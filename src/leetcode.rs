@@ -13,6 +13,8 @@ pub mod p0009_is_palindrome;
 pub mod p0011_max_area;
 pub mod p0012_int_to_roman;
 
+pub mod p0042_trapping_rain_water;
+
 pub mod p0084_largest_rectangle_area;
 pub mod p0085_maximal_rectangle;
 
