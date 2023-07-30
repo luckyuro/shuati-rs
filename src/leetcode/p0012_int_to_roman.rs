@@ -1,4 +1,5 @@
 use super::Solution;
+#[allow(non_snake_case, unused)]
 impl Solution {
     pub fn int_to_roman(num: i32) -> String {
         let solution_0_ = {

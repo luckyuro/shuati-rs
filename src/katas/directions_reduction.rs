@@ -6,37 +6,41 @@ pub enum Direction {
     NORTH,
     SOUTH,
     EAST,
-    WEST
+    WEST,
 }
 
 use self::Direction::*;
 
 pub fn dir_reduc(arr: &[Direction]) -> Vec<Direction> {
-    let mut ret:Vec<Direction> = Vec::new();
+    let mut ret: Vec<Direction> = Vec::new();
 
-    for ele in arr.iter(){
+    for ele in arr.iter() {
         match ele {
-            &NORTH =>
-                match ret.last() {
-                    Some(&SOUTH) => {ret.pop();},
-                    _ => ret.push(NORTH),
-                },
-            &SOUTH =>
-                match ret.last() {
-                    Some(&NORTH) => {ret.pop();},
-                    _ => ret.push(SOUTH),
-                },
-            &EAST =>
-                match ret.last() {
-                    Some(&WEST) => {ret.pop();},
-                    _ => ret.push(EAST),
-                },
-            &WEST =>
-                match ret.last() {
-                    Some(&EAST) => {ret.pop();},
-                    _ => ret.push(WEST),
-                },
-            _ => {},
+            &NORTH => match ret.last() {
+                Some(&SOUTH) => {
+                    ret.pop();
+                }
+                _ => ret.push(NORTH),
+            },
+            &SOUTH => match ret.last() {
+                Some(&NORTH) => {
+                    ret.pop();
+                }
+                _ => ret.push(SOUTH),
+            },
+            &EAST => match ret.last() {
+                Some(&WEST) => {
+                    ret.pop();
+                }
+                _ => ret.push(EAST),
+            },
+            &WEST => match ret.last() {
+                Some(&EAST) => {
+                    ret.pop();
+                }
+                _ => ret.push(WEST),
+            },
+            // _ => {}
         }
     }
     ret
@@ -73,7 +77,6 @@ pub fn dir_reduc(arr: &[Direction]) -> Vec<Direction> {
 //    ret
 //}
 
-
 //fn dir_reduc(arr: &[Direction]) -> Vec<Direction> {
 //    let mut result: Vec<Direction> = Vec::new();
 //    for &s in arr {
@@ -93,9 +96,6 @@ pub fn dir_reduc(arr: &[Direction]) -> Vec<Direction> {
 //        _ => false,
 //    }
 //}
-
-
-
 
 //use Direction::*;
 //
@@ -127,6 +127,4 @@ pub fn dir_reduc(arr: &[Direction]) -> Vec<Direction> {
 //}
 
 #[cfg(test)]
-mod test {
-
-}
+mod test {}

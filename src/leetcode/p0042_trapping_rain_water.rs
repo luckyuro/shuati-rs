@@ -10,14 +10,14 @@ impl Solution {
             if lv < rv {
                 li += 1;
                 if height[li] <= lv {
-                    all += (lv - height[li]);
+                    all += lv - height[li];
                 } else {
                     lv = height[li]
                 }
             } else {
                 ri -= 1;
                 if height[ri] <= rv {
-                    all += (rv - height[ri])
+                    all += rv - height[ri];
                 } else {
                     rv = height[ri];
                 }

@@ -9,7 +9,7 @@ pub mod p0006_convert;
 pub mod p0007_reverse_interger;
 pub mod p0008_my_atoi;
 pub mod p0009_is_palindrome;
-
+pub mod p0010_is_match;
 pub mod p0011_max_area;
 pub mod p0012_int_to_roman;
 
