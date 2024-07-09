@@ -49,7 +49,6 @@ impl Solution {
     }
 }
 mod test {
-    use super::Solution;
     #[test]
     fn test_is_match() {
         assert_eq!(Solution::is_match("aa".to_string(), "a".to_string()), false);
