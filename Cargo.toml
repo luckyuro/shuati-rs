@@ -1,8 +1,10 @@
+cargo-features = ["edition2024"]
+
 [package]
-name = "leetcode"
+name = "shuati_rs"
 version = "0.1.0"
 authors = ["abbform <abbform@gmail.com>"]
 edition = "2024"
 
 [dependencies]
-num = "0.2"
+num = "0.4"

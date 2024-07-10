@@ -48,7 +48,11 @@ impl Solution {
         m[p.len()][s.len()]
     }
 }
+
+#[cfg(test)]
 mod test {
+    use super::Solution;
+
     #[test]
     fn test_is_match() {
         assert_eq!(Solution::is_match("aa".to_string(), "a".to_string()), false);

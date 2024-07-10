@@ -12,8 +12,12 @@ pub mod p0009_is_palindrome;
 pub mod p0010_is_match;
 pub mod p0011_max_area;
 pub mod p0012_int_to_roman;
+pub mod p0013_roman_to_integer;
+pub mod p0014_longest_common_prefix;
 
 pub mod p0042_trapping_rain_water;
+
+pub mod p0053_max_sub_array;
 
 pub mod p0084_largest_rectangle_area;
 pub mod p0085_maximal_rectangle;
@@ -38,3 +42,9 @@ pub mod p1111_max_depth_after_split;
 pub mod p1190_reverse_parentheses;
 
 pub mod p1593_max_unique_split;
+
+pub mod p1598_crawler_log_folder;
+
+pub mod p1701_average_waiting_time;
+
+pub mod p1936_add_minimum_rungs;
